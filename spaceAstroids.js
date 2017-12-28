@@ -3,6 +3,20 @@ var ctx = canvas.getContext('2d');
 canvas.width= window.innerWidth;
 canvas.height= window.innerHeight;
 var BulletAmounts = 10;
+window.addEventListener('keydown',function(){
+	canvas.key=event.keyCode;
+	if(canvas.key === 32){
+		canvas.key=event.keyCode;
+	}
+})
+
+if(canvas.key  !== 32){
+	window.addEventListener('keyup',function(){
+		canvas.key= false;
+
+    })
+}
+
 
 function Component(width,height,color,x,y,isCircle,isBullet,isShip,isCommet,isAstro){
 	this.x=x;
@@ -12,8 +26,7 @@ function Component(width,height,color,x,y,isCircle,isBullet,isShip,isCommet,isAs
 	this.height=height;
 
 	this.draw=function(){
-		if(isCircle){
-			console.log('circle');
+		if(isCircle){ 
 			ctx.beginPath();
 			ctx.arc(this.x,this.y,10,0,2*Math.PI);
 			ctx.fillStyle = this.color;
@@ -21,22 +34,48 @@ function Component(width,height,color,x,y,isCircle,isBullet,isShip,isCommet,isAs
 
 		}
 		else{
-			ctx.fillStyle= this.color;
+			ctx.fillStyle = this.color;
 
 			ctx.fillRect(this.x,this.y,this.width,this.height);
 		}
 	}
 	this.update = function () {
 		if(isBullet){
+			
 			//starts out with 10 bullets
-			this.color='red';
+			if(canvas.key && canvas.key === 32)
+			{
+
+
+				bullet.y=ship.y-bullet.height;
+				bullet.x=ship.x+9;
+				
+				
+			}
+			this.draw();
 		}
-		else if(isAstro){
+
+		else if(isAstro)
+		{
 			this.x+=3;
-			asto.draw()
+			this.draw();
 
 		}
 		else if(isShip){
+
+			if(canvas.key && canvas.key==37){
+				this.x-=5;
+			}
+			else if (canvas.key && canvas.key ==39){
+				this.x+=5;
+			}
+			else if(canvas.key && canvas.key== 38){
+				this.y-=5;
+			}
+			else if(canvas.key && canvas.key == 40){
+				this.y+=5;
+			}
+			this.draw(); 
 
 		}
 		else if(isCommet){
@@ -45,23 +84,31 @@ function Component(width,height,color,x,y,isCircle,isBullet,isShip,isCommet,isAs
 	}
 
 }
-var bullet = new Component(10,5,'blue',209,190,false,true,false,false,false);
+
+//
+function updatePosition(){
+	bullet.y-=20;
+}
+
+var ship=new Component(30,100,'red',200,300,false,false,true,false,false);
+var bullet = new Component(10,10,'blue',ship.x,ship.y,false,true,false,false,false);
 var asto= new Component(10,10,'grey',200,50,true,false,false,false,true);
 var stars= new Component(10,10,'yellow',100,100,true,false,false,true,false);
-var ship=new Component(30,100,'red',200,190,false,false,true,false,false);
+
+
+
 var bulletArray=[];
 for(var i=0;i<BulletAmounts;i++){
 	bulletArray.push(bullet);
 }
-console.log(bulletArray);
-
-/*	requestAnimationFrame(animate);
+function animate(){
+	requestAnimationFrame(animate);
 	ctx.clearRect(0,0,canvas.width,canvas.height);
-	for(var i=0;i<bulletArray.length;i++){
-		bulletArray[i].update();
-		console.log(bulletArray[i]);
-	}
+	bullet.update();
+	updatePosition();
+	ship.update();
+	 
 	asto.update();
 }
-animate();*/
+animate();
 
