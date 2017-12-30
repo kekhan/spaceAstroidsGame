@@ -4,6 +4,7 @@ canvas.width= window.innerWidth;
 canvas.height= window.innerHeight;
 var BulletAmounts = 10;
 var starInitial = 5;
+var count=0;
 window.addEventListener('keydown',function(){
 	canvas.key=event.keyCode;
 	if(canvas.key === 32){
@@ -41,6 +42,29 @@ function Component(width,height,color,x,y,isCircle,isBullet,isShip,isCommet,isAs
 			ctx.fillStyle = this.color;
 
 			ctx.fillRect(this.x,this.y,this.width,this.height);
+		}
+	}
+
+	this.collisionsStars = function()
+	{
+		if((this.x + this.radius) < (ship.x + ship.width) && (this.x + this.radius) > ship.x &&
+               (this.y+this.radius) < ship.y + ship.height && (this.radius + this.y) > ship.y)
+		{
+			if(this.color === 'red'){
+				console.log('not over red');
+			}
+			else{
+				alert("GameOver");
+			}
+		}
+	}
+	this.collision = function(){
+		if((this.x + this.radius) < (bullet.x + bullet.width) && (this.x + this.radius) > bullet.x &&
+               (this.y+this.radius) < bullet.y + bullet.height && (this.radius + this.y) > bullet.y)
+		{
+
+			this.color='red';
+			
 		}
 	}
 	this.update = function () {
@@ -101,6 +125,7 @@ function Component(width,height,color,x,y,isCircle,isBullet,isShip,isCommet,isAs
 			}
 			this.x += this.dx;
 			this.y += this.dy;
+			this.collisionsStars();
 			this.draw();
 		}
 	}
@@ -113,7 +138,7 @@ function updatePosition(){
 }
 
 var ship=new Component(30,100,'red',200,300,false,false,true,false,false);
-var bullet = new Component(10,10,'blue',ship.x,ship.y,false,true,false,false,false);
+var bullet = new Component(10,100,'blue',ship.x,ship.y,false,true,false,false,false);
 //var asto= new Component(10,10,'grey',200,50,true,false,false,false,true);
 
 
@@ -142,12 +167,12 @@ function animate(){
 	ctx.clearRect(0,0,canvas.width,canvas.height);
 	for( var i=0; i<starArrays.length; i++){
 		starArrays[i].update();
+		starArrays[i].collision(starArrays[i]);
 	}
+	bullet.collision();
 	bullet.update();
 	updatePosition();
 	ship.update();
-	 
-	//asto.update();
 }
 animate();
 
