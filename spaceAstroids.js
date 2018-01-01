@@ -12,13 +12,26 @@ window.addEventListener('keydown',function(){
 	}
 })
 
-if(canvas.key  !== 32){
-	window.addEventListener('keyup',function(){
-		canvas.key= false;
 
-    })
+window.addEventListener('keyup',function(){
+	canvas.key= false;
+
+   })
+
+function sound(src){
+	/* plays music or sound*/
+	this.sound= document.getElementById('music');
+	this.sound.src=src;
+	this.sound.setAttribute('preload','auto');
+	this.sound.style.display="none";
+	document.body.appendChild(this.sound);
+	this.play = function(){
+		this.sound.play();
+	}
+	this.stop=function(){
+		this.sound.pause();
+	}
 }
-
 
 function Component(width,height,color,x,y,isCircle,isBullet,isShip,isCommet,isAstro,dx,dy){
 	this.x=x;
@@ -44,11 +57,18 @@ function Component(width,height,color,x,y,isCircle,isBullet,isShip,isCommet,isAs
 			ctx.fillRect(this.x,this.y,this.width,this.height);
 		}
 	}
+	/*this.collisionStarStar = function(){
+		var dx = this.x-this.x;
+		var dy this.y-this.y;
+		var distance = Math.sqrt
 
-	this.collisionsStars = function()
+	}*/
+
+
+	this.collisionShipStars = function()
 	{
 		if((this.x + this.radius) < (ship.x + ship.width) && (this.x + this.radius) > ship.x &&
-               (this.y+this.radius) < ship.y + ship.height && (this.radius + this.y) > ship.y)
+               (this.y+this.radius) < (ship.y + ship.height) && (this.radius + this.y) > (ship.y))
 		{
 			if(this.color === 'red'){
 				console.log('not over red');
@@ -73,13 +93,16 @@ function Component(width,height,color,x,y,isCircle,isBullet,isShip,isCommet,isAs
 			//starts out with 10 bullets
 			if(canvas.key && canvas.key === 32)
 			{
-
-
 				bullet.y=ship.y-bullet.height;
 				bullet.x=ship.x+9;
+				soundBullet.play();
+
 				
 				
 			}
+			updatePosition();
+
+		
 			this.draw();
 		}
 
@@ -125,7 +148,7 @@ function Component(width,height,color,x,y,isCircle,isBullet,isShip,isCommet,isAs
 			}
 			this.x += this.dx;
 			this.y += this.dy;
-			this.collisionsStars();
+			this.collisionShipStars();
 			this.draw();
 		}
 	}
@@ -137,10 +160,14 @@ function updatePosition(){
 	bullet.y-=20;
 }
 
-var ship=new Component(30,100,'red',200,300,false,false,true,false,false);
-var bullet = new Component(10,100,'blue',ship.x,ship.y,false,true,false,false,false);
-//var asto= new Component(10,10,'grey',200,50,true,false,false,false,true);
 
+
+	
+
+var ship=new Component(30,100,'red',200,innerHeight-110,false,false,true,false,false);
+var bullet = new Component(50,50,'white',ship.x,ship.y,false,true,false,false,false);
+//var asto= new Component(10,10,'grey',200,50,true,false,false,false,true);
+ var soundBullet = new sound('laser.mp3');
 
 var starArrays= [];
 var bulletArray=[];
@@ -171,7 +198,6 @@ function animate(){
 	}
 	bullet.collision();
 	bullet.update();
-	updatePosition();
 	ship.update();
 }
 animate();
