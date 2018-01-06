@@ -67,8 +67,8 @@ function Component(width,height,color,x,y,isCircle,isBullet,isShip,isCommet,isAs
 
 	this.collisionShipStars = function()
 	{
-		if((this.x + this.radius) < (ship.x + ship.width) && (this.x + this.radius) > ship.x &&
-               (this.y+this.radius) < (ship.y + ship.height) && (this.radius + this.y) > (ship.y))
+		if((this.x ) < (ship.x + ship.width) && (this.x) > ship.x &&
+               (this.y) < (ship.y + ship.height) && (this.y) > (ship.y))
 		{
 			if(this.color === 'red'){
 				console.log('not over red');
@@ -79,8 +79,8 @@ function Component(width,height,color,x,y,isCircle,isBullet,isShip,isCommet,isAs
 		}
 	}
 	this.collision = function(){
-		if((this.x + this.radius) < (bullet.x + bullet.width) && (this.x + this.radius) > bullet.x &&
-               (this.y+this.radius) < bullet.y + bullet.height && (this.radius + this.y) > bullet.y)
+		if((this.x) < (bullet.x + bullet.width) && (this.x) > bullet.x &&
+               (this.y) < bullet.y + bullet.height && (this.y) > bullet.y)
 		{
 
 			this.color='red';
@@ -164,7 +164,7 @@ function updatePosition(){
 
 	
 
-var ship=new Component(30,100,'red',200,innerHeight-110,false,false,true,false,false);
+var ship=new Component(30,100,'red',Math.random() * innerWidth, Math.random() * (innerHeight-110),false,false,true,false,false);
 var bullet = new Component(50,50,'white',ship.x,ship.y,false,true,false,false,false);
 //var asto= new Component(10,10,'grey',200,50,true,false,false,false,true);
  var soundBullet = new sound('laser.mp3');
@@ -185,7 +185,7 @@ for (var i = 0; i<starInitial; i++){
 
 	var star_x = Math.random()*innerWidth;
 	var star_y = Math.random() * innerHeight;
-	starArrays.push(new Component(10,10,'yellow',star_x,star_y,true,false,false,true,false,dx,dy));
+	starArrays.push(new Component(30,30,'yellow',star_x,star_y,false,false,false,true,false,dx,dy));
 }
 
 
