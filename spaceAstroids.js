@@ -1,3 +1,12 @@
+
+var spaceShip = new Image();
+var laser = new Image();
+var rock = new Image();
+
+function init(){
+	spaceShip.src = 'http://www.pngmart.com/files/3/Spaceship-PNG-File.png';
+}
+
 var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
 canvas.width= window.innerWidth;
@@ -55,6 +64,7 @@ function Component(width,height,color,x,y,isCircle,isBullet,isShip,isCommet,isAs
 			ctx.fillStyle = this.color;
 
 			ctx.fillRect(this.x,this.y,this.width,this.height);
+			
 		}
 	}
 	/*this.collisionStarStar = function(){
@@ -199,6 +209,9 @@ function animate(){
 	bullet.collision();
 	bullet.update();
 	ship.update();
+	ctx.drawImage(spaceShip,300,300,70,150);
 }
 animate();
+init();
+
 
