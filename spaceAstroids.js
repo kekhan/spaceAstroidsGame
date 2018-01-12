@@ -6,6 +6,7 @@ spaceShip.src = 'http://www.pngmart.com/files/3/Spaceship-PNG-File.png';
 laser.src = 'https://donaldcarling.files.wordpress.com/2016/03/blast-harrier-laser-1.png';
 rock.src = 'http://www.freepngimg.com/download/alien/7-2-alien-transparent.png';
 console.log(rock);
+var alienHit =0;
 
 
 var canvas = document.getElementById('canvas');
@@ -83,9 +84,20 @@ function Component(img,x,y,width,height,isBullet,isShip,isComet,color,dx,dy){
 		{
 
 			console.log('alien hit');
+			alienHit+=1;
+			console.log(alienHit);
+
 			this.width= 0;
+			this.x=0;
+			this.y=0;
+			this.dx=0;
+			this.dy=0;
 			this.height = 0;
+
 			
+		}
+		if(alienHit >= starInitial){
+			alert("YOU WIN!!");
 		}
 	}
 	this.update = function () {
