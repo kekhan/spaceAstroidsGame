@@ -5,6 +5,7 @@ var rock = new Image();
 spaceShip.src = 'http://www.pngmart.com/files/3/Spaceship-PNG-File.png';
 laser.src = 'https://donaldcarling.files.wordpress.com/2016/03/blast-harrier-laser-1.png';
 rock.src = 'http://www.freepngimg.com/download/alien/7-2-alien-transparent.png';
+console.log(rock);
 
 
 var canvas = document.getElementById('canvas');
@@ -42,7 +43,7 @@ function sound(src){
 	}
 }
 
-function Component(img,x,y,width,height,isBullet,isShip,isComet,color){
+function Component(img,x,y,width,height,isBullet,isShip,isComet,color,dx,dy){
 	this.img = img;
 	this.x=x;
 	this.y=y;
@@ -71,12 +72,9 @@ function Component(img,x,y,width,height,isBullet,isShip,isComet,color){
 		if((this.x ) < (ship.x + ship.width) && (this.x) > ship.x &&
                (this.y) < (ship.y + ship.height) && (this.y) > (ship.y))
 		{
-			if(this.color === 'red'){
-				console.log('not over red');
-			}
-			else{
-				alert("GameOver");
-			}
+			console.log('hit by alien')
+			alert("GameOver");
+			
 		}
 	}
 	this.collision = function(){
@@ -84,7 +82,9 @@ function Component(img,x,y,width,height,isBullet,isShip,isComet,color){
                (this.y) < bullet.y + bullet.height && (this.y) > bullet.y)
 		{
 
-			this.color='red';
+			console.log('alien hit');
+			this.width= 0;
+			this.height = 0;
 			
 		}
 	}
@@ -175,12 +175,12 @@ for(var i=0;i<BulletAmounts;i++){
 
 
 for (var i = 0; i<starInitial; i++){
-	var dx = 100;
-	var dy = 100;
+	var dx = Math.random()*2;
+	var dy = Math.random()*2;
 
 	var star_x = Math.random()*innerWidth;
 	var star_y = Math.random() * innerHeight;
-	starArrays.push(new Component(rock, Math.random() * innerWidth, Math.random() * (innerHeight-110),dx,dy,false,false,true,"red"));
+	starArrays.push(new Component(rock, Math.random() * innerWidth, Math.random() * (innerHeight-110),50,50,false,false,true,"red",dx,dy));
 	console.log(starArrays)
 }
 
