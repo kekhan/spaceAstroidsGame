@@ -2,10 +2,10 @@
 var spaceShip = new Image();
 var laser = new Image();
 var rock = new Image();
+spaceShip.src = 'http://www.pngmart.com/files/3/Spaceship-PNG-File.png';
+laser.src = 'https://donaldcarling.files.wordpress.com/2016/03/blast-harrier-laser-1.png';
+rock.src = 'http://www.freepngimg.com/download/alien/7-2-alien-transparent.png';
 
-function init(){
-	spaceShip.src = 'http://www.pngmart.com/files/3/Spaceship-PNG-File.png';
-}
 
 var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
@@ -42,7 +42,8 @@ function sound(src){
 	}
 }
 
-function Component(width,height,color,x,y,isCircle,isBullet,isShip,isCommet,isAstro,dx,dy){
+function Component(img,x,y,width,height,isBullet,isShip,isComet,color){
+	this.img = img;
 	this.x=x;
 	this.y=y;
 	this.color=color;
@@ -53,19 +54,9 @@ function Component(width,height,color,x,y,isCircle,isBullet,isShip,isCommet,isAs
 	this.dy=dy;
 
 	this.draw=function(){
-		if(isCircle){ 
-			ctx.beginPath();
-			ctx.arc(this.x,this.y,this.radius,0,2*Math.PI);
-			ctx.fillStyle = this.color;
-			ctx.fill();
-
-		}
-		else{
-			ctx.fillStyle = this.color;
-
-			ctx.fillRect(this.x,this.y,this.width,this.height);
+		ctx.drawImage(this.img,this.x,this.y,this.width,this.height);
 			
-		}
+		
 	}
 	/*this.collisionStarStar = function(){
 		var dx = this.x-this.x;
@@ -116,12 +107,6 @@ function Component(width,height,color,x,y,isCircle,isBullet,isShip,isCommet,isAs
 			this.draw();
 		}
 
-		else if(isAstro)
-		{
-			this.x+=3;
-			this.draw();
-
-		}
 		else if(isShip){
 			if(this.x >= innerWidth-this.width -5 || this.x <= 0){
 				this.x = -this.x
@@ -146,7 +131,7 @@ function Component(width,height,color,x,y,isCircle,isBullet,isShip,isCommet,isAs
 			this.draw(); 
 
 		}
-		else if(isCommet){
+		else if(isComet){
 			// gets points or bullets with collision of bullet
 			if((this.x + this.radius > innerWidth )|| (this.x - this.radius) < 0 ){
 				this.dx = -this.dx;
@@ -174,10 +159,10 @@ function updatePosition(){
 
 	
 
-var ship=new Component(30,100,'red',Math.random() * innerWidth, Math.random() * (innerHeight-110),false,false,true,false,false);
-var bullet = new Component(50,50,'white',ship.x,ship.y,false,true,false,false,false);
+var ship = new Component(spaceShip,Math.random() * innerWidth, Math.random() * (innerHeight-110),100,50,false,true,false);
+var bullet = new Component(laser,Math.random() * innerWidth, Math.random() * (innerHeight-110),100,50,true,false,false);
 //var asto= new Component(10,10,'grey',200,50,true,false,false,false,true);
- var soundBullet = new sound('laser.mp3');
+soundBullet = new sound('laser.mp3');
 
 var starArrays= [];
 var bulletArray=[];
@@ -190,12 +175,13 @@ for(var i=0;i<BulletAmounts;i++){
 
 
 for (var i = 0; i<starInitial; i++){
-	var dx = Math.random()*2;
-	var dy = Math.random()*2;
+	var dx = 100;
+	var dy = 100;
 
 	var star_x = Math.random()*innerWidth;
 	var star_y = Math.random() * innerHeight;
-	starArrays.push(new Component(30,30,'yellow',star_x,star_y,false,false,false,true,false,dx,dy));
+	starArrays.push(new Component(rock, Math.random() * innerWidth, Math.random() * (innerHeight-110),dx,dy,false,false,true,"red"));
+	console.log(starArrays)
 }
 
 
@@ -209,9 +195,8 @@ function animate(){
 	bullet.collision();
 	bullet.update();
 	ship.update();
-	ctx.drawImage(spaceShip,300,300,70,150);
+
 }
 animate();
-init();
 
 
