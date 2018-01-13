@@ -16,6 +16,7 @@ canvas.height= window.innerHeight;
 var BulletAmounts = 10;
 var starInitial = 5;
 var count=0;
+
 window.addEventListener('keydown',function(){
 	canvas.key=event.keyCode;
 	if(canvas.key === 32){
@@ -107,16 +108,14 @@ function Component(img,x,y,width,height,isBullet,isShip,isComet,color,dx,dy){
 			
 			if(canvas.key && canvas.key === 32)
 			{
-				bullet.y=ship.y-bullet.height;
-				bullet.x=ship.x+9;
-				soundBullet.play();
+				bullet.y=ship.y;
+				bullet.x=ship.x;
 
-				
-				
+				soundBullet.play();	
 			}
-			updatePosition();
-
-		
+			// continuoulsy moves the bullet 20 spaces up
+			bullet.y-=20;
+			
 			this.draw();
 		}
 
@@ -162,16 +161,8 @@ function Component(img,x,y,width,height,isBullet,isShip,isComet,color,dx,dy){
 	}
 
 }
-
-//
-function updatePosition(){
-	bullet.y-=20;
-}
-
-
-
 	
-
+// initiating the calls to
 var ship = new Component(spaceShip,Math.random() * innerWidth, Math.random() * (innerHeight-110),100,50,false,true,false);
 var bullet = new Component(laser,Math.random() * innerWidth, Math.random() * (innerHeight-110),100,50,true,false,false);
 //var asto= new Component(10,10,'grey',200,50,true,false,false,false,true);
