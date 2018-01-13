@@ -86,24 +86,25 @@ function Component(img,x,y,width,height,isBullet,isShip,isComet,color,dx,dy){
 			console.log('alien hit');
 			alienHit+=1;
 			console.log(alienHit);
-
 			this.width= 0;
 			this.x=0;
 			this.y=0;
 			this.dx=0;
 			this.dy=0;
 			this.height = 0;
+			// should display 000000
+			console.log(this.width,this.height,this.x,this.y,this.dx,this.dy);
 
 			
 		}
 		if(alienHit >= starInitial){
 			alert("YOU WIN!!");
 		}
+		
 	}
 	this.update = function () {
 		if(isBullet){
 			
-			//starts out with 10 bullets
 			if(canvas.key && canvas.key === 32)
 			{
 				bullet.y=ship.y-bullet.height;
