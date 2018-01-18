@@ -99,7 +99,9 @@ function Component(img,x,y,width,height,isBullet,isShip,isComet,color,dx,dy){
 			
 		}
 		if(alienHit >= starInitial){
-			alert("YOU WIN!!");
+			ctx.font="30px Arial";
+			ctx.fillStyle="#5E5EB3"
+			ctx.fillText("You Win!",innerWidth/2,innerHeight/2);
 		}
 		
 	}
@@ -163,7 +165,7 @@ function Component(img,x,y,width,height,isBullet,isShip,isComet,color,dx,dy){
 }
 	
 // initiating the calls to
-var ship = new Component(spaceShip,Math.random() * innerWidth, Math.random() * (innerHeight-110),100,50,false,true,false);
+var ship = new Component(spaceShip,innerWidth/2, innerHeight/2,100,50,false,true,false);
 var bullet = new Component(laser,Math.random() * innerWidth, Math.random() * (innerHeight-110),100,50,true,false,false);
 //var asto= new Component(10,10,'grey',200,50,true,false,false,false,true);
 soundBullet = new sound('laser.mp3');
@@ -184,14 +186,19 @@ for (var i = 0; i<starInitial; i++){
 
 	var star_x = Math.random()*innerWidth;
 	var star_y = Math.random() * innerHeight;
-	starArrays.push(new Component(rock, Math.random() * innerWidth, Math.random() * (innerHeight-110),50,50,false,false,true,"red",dx,dy));
+	starArrays.push(new Component(rock, 50+20, 30,50,50,false,false,true,"red",dx,dy));
 	console.log(starArrays)
 }
 
 
 function animate(){
+
+
 	requestAnimationFrame(animate);
 	ctx.clearRect(0,0,canvas.width,canvas.height);
+	ctx.font="30px Arial";
+	ctx.fillStyle="#5E5EB3"
+	ctx.fillText("Score:"+alienHit,10,50);
 	for( var i=0; i<starArrays.length; i++){
 		starArrays[i].update();
 		starArrays[i].collision(starArrays[i]);
