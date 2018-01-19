@@ -7,6 +7,7 @@ laser.src = 'https://donaldcarling.files.wordpress.com/2016/03/blast-harrier-las
 rock.src = 'http://www.freepngimg.com/download/alien/7-2-alien-transparent.png';
 console.log(rock);
 var alienHit =0;
+var prompt;
 
 
 var canvas = document.getElementById('canvas');
@@ -206,6 +207,16 @@ function animate(){
 	bullet.collision();
 	bullet.update();
 	ship.update();
+	if(alienHit>=starInitial){
+		prompt = prompt("Play Again? Y/N")
+		if(prompt == "Y"){
+			location.reload();
+		}
+		else{
+			console.log("pass");
+		}
+
+	}
 
 }
 animate();
