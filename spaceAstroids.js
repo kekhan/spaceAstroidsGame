@@ -34,7 +34,6 @@ window.addEventListener('keydown',function(){
 
 window.addEventListener('keyup',function(){
 	canvas.key= false;
-
    })
 
 function startGame(){
