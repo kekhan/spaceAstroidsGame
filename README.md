@@ -14,3 +14,4 @@ Space Asteroids is created with:
 ## Demo
 The link below is the game demo:
 * http://kerinkhan.me/spaceAstroidsGame/spaceAstroids.html
+* https://github.com/kekhan/spaceAstroidsGame/wiki
