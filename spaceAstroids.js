@@ -5,9 +5,9 @@ var spaceShip = new Image();
 */
 var laser = new Image();
 var rock = new Image();
-spaceShip.src = 'http://www.pngmart.com/files/3/Spaceship-PNG-File.png';
+spaceShip.src = 'https://www.pngmart.com/files/3/Spaceship-PNG-File.png';
 laser.src = 'https://donaldcarling.files.wordpress.com/2016/03/blast-harrier-laser-1.png';
-rock.src = 'http://www.pngmart.com/files/4/Asteroid-PNG-Photos.png';
+rock.src = 'https://www.pngmart.com/files/4/Asteroid-PNG-Photos.png';
 console.log(rock);
 var alienHit =0;
 var prompt;
