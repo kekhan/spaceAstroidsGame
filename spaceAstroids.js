@@ -71,9 +71,9 @@ function Component(img,x,y,width,height,isBullet,isShip,isComet,color,dx,dy){
 	this.dy=dy;
 
 	this.draw=function(){
-		window.onload = function(){
-			ctx.drawImage(this.img,this.x,this.y,this.width,this.height);
-		}
+	
+		ctx.drawImage(this.img,this.x,this.y,this.width,this.height);
+		
 
 
 	}
